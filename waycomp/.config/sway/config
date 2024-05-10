@@ -1,0 +1,284 @@
+# Default config for sway
+#
+# Copy this to ~/.config/sway/config and edit it to your liking.
+#
+# Read `man 5 sway` for a complete reference.
+
+### Variables
+#
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+# Your preferred terminal emulator
+exec foot --server
+set $term footclient
+# Your preferred application launcher
+# Note: pass the final command to swaymsg so that the resulting window can be opened
+# on the original workspace that the command was run on.
+#set $menu wofi --show drun --allow-images true --width 20% --term "alacritty" --prompt "Buscar..."
+set $menu fuzzel
+
+### Output configuration
+output * bg /home/lmcj/Imágenes/Fondos/carina-nebula.jpg fill
+set $laptop 'LG Display 0x0521 Unknown'
+set $dell-l 'Dell Inc. DELL P2422H FL07YB3'
+set $dell-r 'Dell Inc. DELL P2419H 8YKNH73'
+output $laptop pos 0 0 res 1920x1080
+output $dell-l pos -1920 -1080 res 1920x1080
+output $dell-r pos 0 -1080 res 1920x1080
+bindswitch --reload --locked lid:on output $laptop disable
+bindswitch --reload --locked lid:off output $laptop enable
+exec_always /home/lmcj/.config/sway/clamshell_fix.sh
+focus output $dell-l
+
+# Autostart
+exec dunst
+exec gammastep
+exec NetworkManager
+
+default_border pixel 3
+default_floating_border pixel
+
+### Idle configuration
+#exec swayidle -w \
+#         timeout 300 'swaylock -f -i /home/lmcj/Imágenes/Fondos/plum-blossoms.jpg' \
+#         timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+#         before-sleep 'swaylock -f -i /home/lmcj/Imágenes/Fondos/plum-blossoms.jpg'
+### Input configuration
+#
+# Example configuration:
+#
+input type:pointer {
+    dwt enabled
+    middle_emulation enabled
+    left_handed enabled
+}
+input "1149:32792:Kensington_Expert_Wireless_TB_Mouse" {
+    natural_scroll disabled
+}
+input "2:7:SynPS/2_Synaptics_TouchPad" {
+    natural_scroll enabled
+    tap enabled
+}
+input type:keyboard {
+    xkb_layout gb
+}
+
+### Key bindings
+#
+# Basics:
+#
+    # Start a terminal
+    bindsym $mod+Shift+Return exec $term
+
+    # Kill focused window
+    bindsym $mod+q kill
+
+    # Start your launcher
+    bindsym $mod+space exec $menu
+
+    bindsym $mod+Delete exec 'swaylock -i /home/lmcj/Imágenes/Fondos/plum-blossoms.jpg'
+
+    bindsym $mod+Shift+Delete exec wlogout
+
+    # Drag floating windows by holding down $mod and left mouse button.
+    # Resize them with right mouse button + $mod.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    floating_modifier $mod normal
+
+    # Reload the configuration file
+    bindsym $mod+Shift+r reload
+
+    # Exit sway (logs you out of your Wayland session)
+    bindsym $mod+Shift+q exec swaynag -t warning -m 'Hay presionado el atajo de salida. ¿Quieres realmente salir de sway? Esto terminará tu sesión de Wayland.' -B 'Simón, sácame de aquí' 'swaymsg exit'
+#
+# Moving around:
+#
+    # Move your focus around
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
+    # Or use $mod+[up|down|left|right]
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+    # Ditto, with arrow keys
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
+#
+# Workspaces:
+#
+    set $ws1 1[U:tty]
+    set $ws2 2[I:web]
+    set $ws3 3[O]
+    set $ws4 4[P:mail]
+    set $ws5 5[7]
+    set $ws6 6[8]
+    set $ws7 7[9]
+    set $ws8 8[0]
+    workspace $ws1 output $dell-l
+    workspace $ws2 output $dell-l
+    workspace $ws3 output $dell-l
+    workspace $ws4 output $dell-l
+    workspace $ws5 output $dell-r
+    workspace $ws6 output $dell-r
+    workspace $ws7 output $dell-r
+    workspace $ws8 output $dell-r
+    # Switch to workspace
+    bindsym $mod+u workspace number $ws1
+    bindsym $mod+i workspace number $ws2
+    bindsym $mod+o workspace number $ws3
+    bindsym $mod+p workspace number $ws4
+    bindsym $mod+7 workspace number $ws5
+    bindsym $mod+8 workspace number $ws6
+    bindsym $mod+9 workspace number $ws7
+    bindsym $mod+0 workspace number $ws8
+    # Move focused container to workspace
+    bindsym $mod+Shift+u move container to workspace number $ws1
+    bindsym $mod+Shift+i move container to workspace number $ws2
+    bindsym $mod+Shift+o move container to workspace number $ws3
+    bindsym $mod+Shift+p move container to workspace number $ws4
+    bindsym $mod+Shift+7 move container to workspace number $ws5
+    bindsym $mod+Shift+8 move container to workspace number $ws6
+    bindsym $mod+Shift+9 move container to workspace number $ws7
+    bindsym $mod+Shift+0 move container to workspace number $ws8
+    # Note: workspaces can have any name you want, not just numbers.
+    # We just use 1-10 as the default.
+#
+# Layout stuff:
+#
+    # You can "split" the current object of your focus with
+    # $mod+b or $mod+v, for horizontal and vertical splits
+    # respectively.
+    bindsym $mod+b splith
+    bindsym $mod+v splitv
+
+    # Switch the current container between different layout styles
+    bindsym $mod+s layout stacking
+    bindsym $mod+t layout tabbed
+    bindsym $mod+e layout toggle split
+
+    # Make the current focus fullscreen
+    bindsym $mod+f fullscreen
+
+    # Toggle the current focus between tiling and floating mode
+    bindsym $mod+Shift+d floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    bindsym $mod+d focus mode_toggle
+
+    # Move focus to the parent container
+    bindsym $mod+a focus parent
+
+    # Multimedia keys
+    bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+    bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+    bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+    bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+    bindsym XF86Display exec wdisplays
+    #bindsym XF86WLAN
+    #bindsym XF86Tools
+    #bindsym XF86Bluetooth
+    #bindsym XF86Keyboard
+    #bindsym XF86Favorites
+    bindsym Print exec grim - | swappy -f -
+    bindsym XF86Launch2 exec grim -g "$(slurp)" - | swappy -f -
+#
+# Scratchpad:
+#
+    # Sway has a "scratchpad", which is a bag of holding for windows.
+    # You can send windows there and get them back later.
+
+    # Move the currently focused window to the scratchpad
+    bindsym $mod+Shift+minus move scratchpad
+
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    bindsym $mod+minus scratchpad show
+#
+# Resizing containers:
+#
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+#
+# Status Bar:
+#
+# Read `man 5 sway-bar` for more information about this section.
+bar {
+    #position top
+
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    #status_command while date +'%Y-%m-%d %H:%M %p'; do sleep 1; done
+
+    #colors {
+    #    statusline #ffffff
+    #    background #323232
+    #    inactive_workspace #323232 #323232 #5c5c5c
+    #}
+    swaybar_command waybar
+}
+## Base16 Rosé Pine Moon
+# Author: Emilia Dunfelt &lt;edun@dunfelt.se&gt;
+
+set $base00 #232136
+set $base01 #2a273f
+set $base02 #393552
+set $base03 #6e6a86
+set $base04 #908caa
+set $base05 #e0def4
+set $base06 #e0def4
+set $base07 #56526e
+set $base08 #eb6f92
+set $base09 #f6c177
+set $base0A #ea9a97
+set $base0B #3e8fb0
+set $base0C #9ccfd8
+set $base0D #c4a7e7
+set $base0E #f6c177
+set $base0F #56526e
+#                       Border  BG      Text    Ind     Child Border
+client.focused          $base05 $base0D $base00 $base0D $base0D
+client.focused_inactive $base01 $base01 $base05 $base03 $base01
+client.unfocused        $base01 $base00 $base05 $base01 $base01
+client.urgent           $base08 $base08 $base00 $base08 $base08
+
+include /etc/sway/config.d/*

@@ -1,0 +1,5 @@
+#set recolor                     "true"
+#set font                        "MesloLGLDZ Nerd Font"
+#include night-theme
+set guioptions                  none
+set selection-clipboard 	clipboard
