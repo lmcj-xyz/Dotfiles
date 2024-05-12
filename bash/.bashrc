@@ -31,5 +31,3 @@ if [ -d ~/.bashrc.d ]; then
 fi
 
 unset rc
-
-[ -f "/home/lmcj/.ghcup/env" ] && source "/home/lmcj/.ghcup/env" # ghcup-env
