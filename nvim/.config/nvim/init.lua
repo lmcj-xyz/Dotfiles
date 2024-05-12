@@ -533,8 +533,6 @@ end
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
   clangd = {},
-  -- jedi_language_server = {},
-  -- pyright = {},
   pylsp = {},
   lua_ls = {
     Lua = {
