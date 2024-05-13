@@ -1,0 +1,18 @@
+#!/bin/bash
+
+dev="98d6,146x29,0,0{90x29,0,0[90x23,0,0,2,90x5,0,24,8],55x29,91,0,7}"
+eh="even-horizontal"
+ev="even-vertical"
+mh="main-horizontal"
+mv="main-vertical"
+tiled="tiled"
+
+printf "Select a layout:\n-----\nIncluded in tmux\n\t1) $eh\n\t2) $ev\n\t3) $mh\n\t4) $mv \n\t5) $tiled\n\nCustom\n\t5) dev\n-----\n> "
+
+read selection
+echo $selection
+
+case $selection in
+	1) echo "$selection";;
+	2) echo "$selection";;
+esac

@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [[ $# -eq 1 ]]; then
+	directory=$1
+else
+	directory=$(find ~/Documentos/PhD/LaTeX ~/Proyectos ~/Documentos -mindepth 1 -maxdepth 1 -type d | fzf)
+fi
+
+if [[ -z $directory ]]; then
+	exit 0
+fi
+
+win_name=$(basename "$directory" | tr . - | tr [:upper:] [:lower:])
+tmux_running=$(pgrep tmux)
+
+col_prompt=$(tput setaf 5)
+normal=$(tput sgr0)
+printf "${col_prompt}Choose a name for the session which will contain the window $win_name:\n>${normal} "
+read sesh_name
+
+tmux start-server
+
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+	tmux new-window -t $sesh_name:$win_name -c $directory
+	exit 0
+fi
+
+if ! tmux has-session -t=$sesh_name 2> /dev/null; then
+	tmux new-session -ds $sesh_name
+	tmux new-window -t $sesh_name:$win_name -c $directory
+fi
+
+tmux switch-client -t $sesh_name:$win_name
