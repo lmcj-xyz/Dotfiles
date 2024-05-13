@@ -1,3 +1,4 @@
+alias ls="ls --color"
 alias t="trash -v"
 alias rm="rm -vi"
 alias numerics="source /home/lmcj/.pyenvs/numerics/bin/activate"
