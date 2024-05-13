@@ -3,7 +3,7 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/Proyectos ~/Documentos/playground-latex ~/Documentos/playground-typst ~/Documentos/PhD/LaTeX ~/Documentos/PhD/Typst -mindepth 1 -maxdepth 1 -type d | fzf)
+    selected=$(find ~/Proyectos ~/Documentos/playground-latex ~/Documentos/playground-typst ~/Documentos/PhD/LaTeX ~/Documentos/PhD/Typst ~/PhD/LaTeX ~/PhD/Typst -mindepth 1 -maxdepth 1 -type d | fzf)
 fi
 
 if [[ -z $selected ]]; then
