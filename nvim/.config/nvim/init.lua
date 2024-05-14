@@ -70,7 +70,7 @@ vim.opt.virtualedit = "block"
 vim.g.python3_host_prog = '/home/lmcj/.pyenv/versions/nvim/bin/python'
 
 -- Typst
-vim.g.typst_pdf_viewer = 'zathura'
+vim.g.typst_pdf_viewer = 'evince'
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
