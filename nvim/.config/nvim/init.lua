@@ -404,7 +404,7 @@ vim.defer_fn(function()
   }
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'cpp', 'python' },
+    ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'cpp', 'python', 'typst' },
     modules = { }, -- added so that there are no warnings
     sync_install = true, -- added so that there are no warnings
     ignore_install = { },
@@ -532,6 +532,7 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
+  typst_lsp = {},
   clangd = {},
   pylsp = {},
   lua_ls = {
