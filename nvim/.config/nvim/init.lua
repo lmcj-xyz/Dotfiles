@@ -51,7 +51,7 @@ vim.opt.timeout = true
 vim.opt.timeoutlen = 300
 
 -- Set completeopt to have a better completion experience
-vim.opt.completeopt = 'menuone,noselect'
+vim.opt.completeopt = 'menu,menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
 vim.opt.termguicolors = true
@@ -582,14 +582,9 @@ require('luasnip.loaders.from_vscode').lazy_load({paths = {"./mysnippets"}})
 luasnip.config.setup {}
 
 cmp.setup {
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
   },
   mapping = cmp.mapping.preset.insert {
     ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -620,9 +615,14 @@ cmp.setup {
       end
     end, { 'i', 's' }),
   },
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
   },
 }
 
