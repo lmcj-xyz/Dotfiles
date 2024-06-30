@@ -26,10 +26,10 @@ set $menu fuzzel
 output * bg /home/lmcj/Imágenes/Fondos/carina-nebula.jpg fill
 set $laptop 'LG Display 0x0521 Unknown'
 set $dell-l 'Dell Inc. DELL P2422H FL07YB3'
-set $dell-r 'Dell Inc. DELL P2419H 8YKNH73'
+#set $dell-r 'Dell Inc. DELL P2419H 8YKNH73'
 output $laptop pos 0 0 res 1920x1080
 output $dell-l pos -1920 -1080 res 1920x1080
-output $dell-r pos 0 -1080 res 1920x1080
+#output $dell-r pos 0 -1080 res 1920x1080
 bindswitch --reload --locked lid:on output $laptop disable
 bindswitch --reload --locked lid:off output $laptop enable
 exec_always /home/lmcj/.config/sway/clamshell_fix.sh
@@ -132,14 +132,14 @@ input type:keyboard {
     set $ws6 6[8]
     set $ws7 7[9]
     set $ws8 8[0]
-    workspace $ws1 output $dell-l
-    workspace $ws2 output $dell-l
-    workspace $ws3 output $dell-l
-    workspace $ws4 output $dell-l
-    workspace $ws5 output $dell-r
-    workspace $ws6 output $dell-r
-    workspace $ws7 output $dell-r
-    workspace $ws8 output $dell-r
+    #workspace $ws1 output $dell-l
+    #workspace $ws2 output $dell-l
+    #workspace $ws3 output $dell-l
+    #workspace $ws4 output $dell-l
+    #workspace $ws5 output $dell-r
+    #workspace $ws6 output $dell-r
+    #workspace $ws7 output $dell-r
+    #workspace $ws8 output $dell-r
     # Switch to workspace
     bindsym $mod+u workspace number $ws1
     bindsym $mod+i workspace number $ws2
@@ -194,6 +194,9 @@ input type:keyboard {
     bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
     bindsym XF86MonBrightnessUp exec brightnessctl set +5%
     bindsym XF86Display exec wdisplays
+    bindsym XF86AudioPlay exec playerctl play-pause
+    bindsym XF86AudioPrev exec playerctl previous
+    bindsym XF86AudioNext exec playerctl next
     #bindsym XF86WLAN
     #bindsym XF86Tools
     #bindsym XF86Bluetooth

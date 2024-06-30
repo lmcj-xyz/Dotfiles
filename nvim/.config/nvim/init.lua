@@ -116,8 +116,8 @@ require('lazy').setup({
   },
 
   {
-    "rose-pine/neovim",
-    name = "rose-pine",
+    'rose-pine/neovim',
+    name = 'rose-pine',
     config = function()
       vim.cmd.colorscheme('rose-pine')
     end,
@@ -226,10 +226,9 @@ vim.defer_fn(function()
     ignore_install = {},
     auto_install = false,
     -- I prefer vimtex to handle all latex related stuff
-    highlight = { enable = true, disable = { 'latex' } },
+    highlight = { enable = true, },
     incremental_selection = {
       enable = true,
-      disable = { 'latex' },
       keymaps = {
         init_selection = "<Leader>ss",
         node_incremental = "<Leader>si",
@@ -240,7 +239,6 @@ vim.defer_fn(function()
     textobjects = {
       select = {
         enable = true,
-        disable = { 'latex' },
         lookahead = true,
         keymaps = {
           -- You can use the capture groups defined in textobjects.scm
@@ -254,7 +252,6 @@ vim.defer_fn(function()
       },
       move = {
         enable = true,
-        disable = { 'latex' },
         set_jumps = true, -- whether to set jumps in the jumplist
         goto_next_start = {
           [']m'] = '@function.outer',
@@ -275,7 +272,6 @@ vim.defer_fn(function()
       },
       swap = {
         enable = true,
-        disable = { 'latex' },
         swap_next = {
           ['<leader>a'] = '@parameter.inner',
         },
@@ -336,37 +332,33 @@ local on_attach = function(_, bufnr)
   end, { desc = 'Format current buffer with LSP' })
 end
 
+-- Setup neovim lua configuration
+require('neodev').setup()
+
+-- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+-- [[ Mason LSP Config ]]
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
 local servers = {
-  typst_lsp = {},
   clangd = {},
-  pylsp = {},
+  ltex = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
     },
   },
-}
-
--- Setup clang
-require("lspconfig").clangd.setup({})
-
--- Setup neovim lua configuration
-require('neodev').setup()
-
--- Setup typst_lsp
-require('lspconfig').typst_lsp.setup {
-  settings = {
+  pylsp = {},
+  r_language_server = {},
+  texlab = {},
+  typst_lsp = {
     exportPdf = "onType"
-  }
+  },
 }
-
--- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
 -- Ensure the servers above are installed
-local mason_lspconfig = require 'mason-lspconfig'
+
+local mason_lspconfig = require('mason-lspconfig')
 
 mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
@@ -384,26 +376,26 @@ mason_lspconfig.setup_handlers {
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
-local cmp = require 'cmp'
-local luasnip = require 'luasnip'
-require('luasnip.loaders.from_vscode').lazy_load({ paths = { "./mysnippets" } })
-luasnip.config.setup {}
+local cmp = require('cmp')
+local luasnip = require('luasnip')
+require('luasnip.loaders.from_vscode').lazy_load({ paths = { './mysnippets' } })
+luasnip.config.setup({})
 
-cmp.setup {
+cmp.setup({
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
   },
-  mapping = cmp.mapping.preset.insert {
+  mapping = cmp.mapping.preset.insert({
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete {},
-    ['<CR>'] = cmp.mapping.confirm {
+    ['<CR>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       --select = true,
-    },
+    }),
     ['<Tab>'] = cmp.mapping(function(fallback)
       --if cmp.visible() then
       --  cmp.select_next_item()
@@ -422,7 +414,7 @@ cmp.setup {
         fallback()
       end
     end, { 'i', 's' }),
-  },
+  }),
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
@@ -432,12 +424,10 @@ cmp.setup {
     completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered(),
   },
-}
+})
 
 -- [[ Custom mappings ]]
-vim.keymap.set(
-  { 'n', 'i', 'v' },
-  '<F2>',
+vim.keymap.set({ 'n', 'i', 'v' }, '<F2>',
   function()
     vim.cmd.write()
     vim.cmd('mksession! session.vim')
