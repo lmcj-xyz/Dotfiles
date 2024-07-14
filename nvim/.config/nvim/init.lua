@@ -61,6 +61,12 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
+-- lazy.nvim
+  {
+    "m4xshen/hardtime.nvim",
+    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+    opts = {}
+  },
   { 'kaarmu/typst.vim',     ft = 'typst', lazy = false, },
 
   { 'lervag/vimtex',
