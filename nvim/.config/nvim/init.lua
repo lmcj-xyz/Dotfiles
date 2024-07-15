@@ -39,7 +39,7 @@ vim.opt.splitright = true
 vim.opt.virtualedit = "block"
 
 -- [[ Variables ]]
-vim.g.python3_host_prog = '/home/lmcj/.pyenv/versions/nvim/bin/python'
+vim.g.python3_host_prog = '/usr/bin/python3'
 
 vim.g.typst_pdf_viewer = 'evince'
 
