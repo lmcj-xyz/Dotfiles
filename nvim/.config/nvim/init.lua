@@ -226,7 +226,7 @@ vim.defer_fn(function()
     on_attach = nil,
   }
   require('nvim-treesitter.configs').setup {
-    ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'cpp', 'python', 'typst' },
+    ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'cpp', 'python', 'typst', 'zig' },
     modules = {},
     sync_install = true,
     ignore_install = {},
