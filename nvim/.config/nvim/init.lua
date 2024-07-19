@@ -38,6 +38,8 @@ vim.opt.splitright = true
 
 vim.opt.virtualedit = "block"
 
+vim.opt.encoding = "utf-8"
+
 -- [[ Variables ]]
 --vim.g.python3_host_prog = '/home/lmcj/.pyenv/versions/nvim/bin/python'
 
@@ -227,9 +229,9 @@ vim.defer_fn(function()
   }
   require('nvim-treesitter.configs').setup {
     ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'cpp', 'python', 'typst', 'zig' },
+    ignore_install = {"latex"},
     modules = {},
     sync_install = true,
-    ignore_install = {},
     auto_install = false,
     -- I prefer vimtex to handle all latex related stuff
     highlight = { enable = true, },
