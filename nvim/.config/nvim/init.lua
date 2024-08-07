@@ -43,10 +43,25 @@ vim.opt.encoding = "utf-8"
 -- [[ Variables ]]
 --vim.g.python3_host_prog = '/home/lmcj/.pyenv/versions/nvim/bin/python'
 
-vim.g.typst_pdf_viewer = 'evince'
-
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+
+-- Typst
+vim.g.typst_pdf_viewer = 'evince'
+
+-- Vimtex
+vim.g.tex_flavor = 'latex'
+vim.g.vimtex_complete_close_braces = 1
+vim.g.vimtex_quickfix_open_on_warning = 0
+vim.g.vimtex_compiler_method = 'latexmk'
+vim.g.vimtex_view_method = 'zathura'
+vim.g.vimtex_syntax_enabled = 1
+vim.g.vimtex_quickfix_method = 'pplatex'
+vim.g.vimtex_syntax_conceal_cites = {
+	type = 'brackets',
+	icon = '📖',
+	verbose = false,
+}
 
 -- [[ Lazy ]]
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -71,36 +86,7 @@ require('lazy').setup({
   },
   { 'kaarmu/typst.vim',     ft = 'typst', lazy = false, },
 
-  { 'lervag/vimtex',
-    config = function()
-      vim.g.tex_flavor = 'latex'
-      vim.g.vimtex_complete_close_braces = 1
-      vim.g.vimtex_quickfix_open_on_warning = 0
-      vim.g.vimtex_compiler_method = 'latexmk'
-      vim.g.vimtex_view_method = 'zathura'
-      vim.g.vimtex_view_general_viewer = 'zathura'
-      vim.g.vimtex_syntax_enabled = 1
-      vim.g.vimtex_quickfix_method = 'latexlog'
-      vim.g.vimtex_syntax_conceal_cites = {
-        type = 'brackets',
-        icon = '📖',
-        verbose = true,
-      }
-      vim.g.vimtex_syntax_conceal = {
-        accents = 1,
-        cites = 1,
-        fancy = 1,
-        greek = 1,
-        math_bounds = 1,
-        math_delimiters = 1,
-        math_fracs = 1,
-        math_super_sub = 1,
-        math_symbols = 1,
-        sections = 1,
-        styles = 1,
-      }
-    end
-  },
+  { 'lervag/vimtex', },
 
   { 'folke/which-key.nvim', opts = {} },
 
