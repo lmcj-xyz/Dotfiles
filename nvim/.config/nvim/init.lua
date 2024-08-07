@@ -123,7 +123,7 @@ require('lazy').setup({
     config = function()
       require('lualine').setup({
         options = {
-          theme = 'base16'
+          theme = 'auto'
         }
       })
     end,
