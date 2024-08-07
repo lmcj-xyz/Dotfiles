@@ -109,21 +109,21 @@ require('lazy').setup({
     },
   },
 
-  {
-    'rose-pine/neovim',
-    name = 'rose-pine',
-    config = function()
-      vim.cmd.colorscheme('rose-pine')
-    end,
-  },
+  --{
+  --  'rose-pine/neovim',
+  --  name = 'rose-pine',
+  --  config = function()
+  --    vim.cmd.colorscheme('rose-pine')
+  --  end,
+  --},
 
   {
     'nvim-lualine/lualine.nvim',
-    event = 'ColorScheme',
+    --event = 'ColorScheme',
     config = function()
       require('lualine').setup({
         options = {
-          theme = 'rose-pine'
+          theme = 'base16'
         }
       })
     end,
