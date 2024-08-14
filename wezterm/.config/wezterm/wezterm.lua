@@ -16,7 +16,7 @@ local config = wezterm.config_builder()
 
 -- For example, changing the color scheme:
 
-config.color_scheme = 'Rosé Pine (base16)'
+config.color_scheme = 'Tokyo Night'
 
 
 
