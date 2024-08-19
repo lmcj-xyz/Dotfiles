@@ -1,5 +1,6 @@
 # Neovim installation
 export PATH="$PATH:/opt/nvim-linux64/bin"
+export PATH="$PATH:/opt/pplatex-1.0-rc2/bin"
 # vi mode
 set -o vi
 # Editor
