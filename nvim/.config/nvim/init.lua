@@ -344,7 +344,7 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 local servers = {
   clangd = {},
   zls = {},
-  ltex = {},
+  ltex = {ltex = {language = "en-GB"}},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
