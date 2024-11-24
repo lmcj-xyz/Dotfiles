@@ -340,19 +340,11 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 local servers = {
   clangd = {},
-  zls = {},
-  ltex = {ltex = {language = "en-GB"}},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
     },
-  },
-  pylsp = {},
-  r_language_server = {},
-  texlab = {},
-  typst_lsp = {
-    exportPdf = "onType"
   },
 }
 -- Ensure the servers above are installed
