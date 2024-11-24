@@ -1,0 +1,13 @@
+profile settler {
+	output eDP-1 disable
+	output "Dell Inc. DELL P2422H FL07YB3" mode 1920x1080@60.000 scale 1 position 0,0
+}
+
+profile hermit {
+	output eDP-1 disable
+	output "Dell Inc. DELL P2419H 8YKNH73" mode 1920x1080@60.000 scale 1 position 0,0
+}
+
+profile traveller {
+	output eDP-1 enable scale 1.25 mode 1920x1080@60.000 position 0,0
+}

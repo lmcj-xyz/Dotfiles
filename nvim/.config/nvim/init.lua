@@ -47,7 +47,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Typst
-vim.g.typst_pdf_viewer = 'evince'
+vim.g.typst_pdf_viewer = 'zathura'
 
 -- Vimtex
 vim.g.tex_flavor = 'latex'
@@ -56,7 +56,7 @@ vim.g.vimtex_quickfix_open_on_warning = 0
 vim.g.vimtex_compiler_method = 'latexmk'
 vim.g.vimtex_view_method = 'zathura'
 vim.g.vimtex_syntax_enabled = 1
-vim.g.vimtex_quickfix_method = 'pplatex'
+--vim.g.vimtex_quickfix_method = 'pplatex'
 vim.g.vimtex_syntax_conceal_cites = {
 	type = 'brackets',
 	icon = '📖',
@@ -84,7 +84,6 @@ require('lazy').setup({
     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
     opts = {}
   },
-  { 'kaarmu/typst.vim',     ft = 'typst', lazy = false, },
 
   { 'lervag/vimtex', },
 
@@ -107,11 +106,6 @@ require('lazy').setup({
       'saadparwaiz1/cmp_luasnip',
       'hrsh7th/cmp-nvim-lsp',
     },
-  },
-
-  {
-    'rose-pine/neovim',
-    name = 'rose-pine',
   },
 
   {
@@ -183,6 +177,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
+
+-- [[ Indent blanklines ]]
+require("ibl").setup()
 
 -- [[ some telescome keybindinds and fzf ]]
 -- Enable telescope fzf native, if installed

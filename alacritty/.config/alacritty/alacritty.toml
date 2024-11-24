@@ -1,5 +1,5 @@
 import = [
-    "~/.config/alacritty/themes/pine-rose.toml"
+    "~/.config/alacritty/themes/tokyo-night.toml"
 ]
 
 ipc_socket = true
@@ -63,11 +63,11 @@ builtin_box_drawing = true
 size = 16
 
 [font.bold]
-family = "monospace"
+family = "JuliaMono"
 style = "Bold"
 
 [font.bold_italic]
-family = "monospace"
+family = "JuliaMono"
 style = "Bold Italic"
 
 [font.glyph_offset]
@@ -75,11 +75,11 @@ x = 0
 y = 0
 
 [font.italic]
-family = "monospace"
+family = "JuliaMono"
 style = "Italic"
 
 [font.normal]
-family = "MesloLGLDZ Nerd Font Mono"
+family = "JuliaMono"
 style = "Regular"
 
 [font.offset]
