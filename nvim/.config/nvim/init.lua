@@ -1,4 +1,5 @@
 -- [[ Options ]]
+
 vim.opt.spell = true
 vim.opt.spelllang = { 'en', 'es_mx' }
 
@@ -41,7 +42,7 @@ vim.opt.virtualedit = "block"
 vim.opt.encoding = "utf-8"
 
 -- [[ Variables ]]
---vim.g.python3_host_prog = '/home/lmcj/.pyenv/versions/nvim/bin/python'
+vim.g.python3_host_prog = '/home/lmcj/.pyenv/versions/nvim/bin/python'
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -64,98 +65,106 @@ vim.g.vimtex_syntax_conceal_cites = {
 }
 
 -- [[ Lazy ]]
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system {
-    'git',
-    'clone',
-    '--filter=blob:none',
-    'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable', -- latest stable release
-    lazypath,
-  }
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup({
 -- lazy.nvim
-  {
-    "m4xshen/hardtime.nvim",
-    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-    opts = {}
-  },
-
-  { 'lervag/vimtex', },
-
-  { 'folke/which-key.nvim', opts = {} },
-
-  {
-    'neovim/nvim-lspconfig',
-    dependencies = {
-      { 'williamboman/mason.nvim', config = true },
-      'williamboman/mason-lspconfig.nvim',
-      { 'j-hui/fidget.nvim',       tag = "legacy", opts = {} },
-      'folke/neodev.nvim',
+require('lazy').setup({
+  spec = {
+    {
+      "m4xshen/hardtime.nvim",
+      dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+      opts = {}
     },
-  },
 
-  {
-    'hrsh7th/nvim-cmp',
-    dependencies = {
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-      'hrsh7th/cmp-nvim-lsp',
-    },
-  },
+    { 'lervag/vimtex', },
 
-  {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {},
-    config = function()
-      vim.cmd.colorscheme('tokyonight-night')
-    end,
-  },
+    { 'folke/which-key.nvim', opts = {} },
 
-  {
-    'nvim-lualine/lualine.nvim',
-    --event = 'ColorScheme',
-    config = function()
-      require('lualine').setup({
-        options = {
-          theme = 'tokyonight'
-        }
-      })
-    end,
-  },
-
-  { 'lukas-reineke/indent-blankline.nvim', main = "ibl", },
-
-  {
-    'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
-        cond = function()
-          return vim.fn.executable 'make' == 1
-        end,
+    {
+      'neovim/nvim-lspconfig',
+      dependencies = {
+        { 'williamboman/mason.nvim', config = true },
+        'williamboman/mason-lspconfig.nvim',
+        { 'j-hui/fidget.nvim',       tag = "legacy", opts = {} },
+        'folke/neodev.nvim',
       },
     },
-  },
 
-  {
-    'nvim-treesitter/nvim-treesitter',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-      'nvim-treesitter/nvim-treesitter-context',
+    {
+      'hrsh7th/nvim-cmp',
+      dependencies = {
+        'L3MON4D3/LuaSnip',
+        'saadparwaiz1/cmp_luasnip',
+        'hrsh7th/cmp-nvim-lsp',
+      },
     },
-    build = ':TSUpdate',
+
+    {
+      "folke/tokyonight.nvim",
+      lazy = false,
+      priority = 1000,
+      opts = {},
+      config = function()
+        vim.cmd.colorscheme('tokyonight-night')
+      end,
+    },
+
+    {
+      'nvim-lualine/lualine.nvim',
+      --event = 'ColorScheme',
+      config = function()
+        require('lualine').setup({
+          options = {
+            theme = 'tokyonight'
+          }
+        })
+      end,
+    },
+
+    { 'lukas-reineke/indent-blankline.nvim', main = "ibl", },
+
+    {
+      'nvim-telescope/telescope.nvim',
+      branch = '0.1.x',
+      dependencies = {
+        'nvim-lua/plenary.nvim',
+        {
+          'nvim-telescope/telescope-fzf-native.nvim',
+          build = 'make',
+          cond = function()
+            return vim.fn.executable 'make' == 1
+          end,
+        },
+      },
+    },
+
+    {
+      'nvim-treesitter/nvim-treesitter',
+      dependencies = {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        'nvim-treesitter/nvim-treesitter-context',
+      },
+      build = ':TSUpdate',
+    },
   },
-}, {})
+  -- some settings
+  install = {colorscheme = {'tokyonight'}},
+  checker = {enabled = true},
+})
 
 -- [[ Basic Keymaps ]]
 
@@ -218,7 +227,7 @@ vim.defer_fn(function()
     on_attach = nil,
   }
   require('nvim-treesitter.configs').setup {
-    ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'cpp', 'python', 'typst', 'zig' },
+    ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'cpp', 'python', 'typst' },
     ignore_install = {"latex"},
     modules = {},
     sync_install = true,
