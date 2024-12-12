@@ -100,7 +100,18 @@ require('lazy').setup({
         { 'williamboman/mason.nvim', config = true },
         'williamboman/mason-lspconfig.nvim',
         { 'j-hui/fidget.nvim',       tag = "legacy", opts = {} },
-        'folke/neodev.nvim',
+
+        {
+          'folke/lazydev.nvim',
+          ft = 'lua', -- only load on lua files
+          opts = {
+            library = {
+              -- See the configuration section for more details
+              -- Load luvit types when the `vim.uv` word is found
+              { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+            },
+          },
+        },
       },
     },
 
@@ -341,7 +352,7 @@ local on_attach = function(_, bufnr)
 end
 
 -- Setup neovim lua configuration
-require('neodev').setup()
+--require('neodev').setup()
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 -- [[ Mason LSP Config ]]
