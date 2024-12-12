@@ -59,9 +59,9 @@ vim.g.vimtex_view_method = 'zathura'
 vim.g.vimtex_syntax_enabled = 1
 --vim.g.vimtex_quickfix_method = 'pplatex'
 vim.g.vimtex_syntax_conceal_cites = {
-	type = 'brackets',
-	icon = '📖',
-	verbose = false,
+  type = 'brackets',
+  icon = '📖',
+  verbose = false,
 }
 
 -- [[ Lazy ]]
@@ -72,7 +72,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
+      { out,                            "WarningMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
@@ -113,6 +113,24 @@ require('lazy').setup({
           },
         },
       },
+      config = function()
+        -- Formatting
+        vim.api.nvim_create_autocmd('LspAttach', {
+          callback = function(args)
+            local client = vim.lsp.get_client_by_id(args.data.client_id)
+            if not client then return end
+            if client.supports_method('textDocument/formatting', 0) then
+              vim.api.nvim_create_autocmd('BufWritePre', {
+                buffer = args.buf,
+                callback = function()
+                  vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+                end
+              })
+            end
+          end
+        }
+        )
+      end
     },
 
     {
@@ -173,8 +191,8 @@ require('lazy').setup({
     },
   },
   -- some settings
-  install = {colorscheme = {'tokyonight'}},
-  checker = {enabled = false},
+  install = { colorscheme = { 'tokyonight' } },
+  checker = { enabled = false },
 })
 
 -- [[ Basic Keymaps ]]
@@ -225,7 +243,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 
 -- [[ Configure Treesitter ]]
 vim.defer_fn(function()
-  local tex_stuff = {'tex', 'latex', 'bibtex'}
+  local tex_stuff = { 'tex', 'latex', 'bibtex' }
   require('treesitter-context').setup {
     enable = true,
     max_lines = 0,
