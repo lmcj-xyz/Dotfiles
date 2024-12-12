@@ -163,7 +163,7 @@ require('lazy').setup({
   },
   -- some settings
   install = {colorscheme = {'tokyonight'}},
-  checker = {enabled = true},
+  checker = {enabled = false},
 })
 
 -- [[ Basic Keymaps ]]
@@ -214,6 +214,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 
 -- [[ Configure Treesitter ]]
 vim.defer_fn(function()
+  local tex_stuff = {'tex', 'latex', 'bibtex'}
   require('treesitter-context').setup {
     enable = true,
     max_lines = 0,
@@ -227,15 +228,15 @@ vim.defer_fn(function()
     on_attach = nil,
   }
   require('nvim-treesitter.configs').setup {
-    ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'cpp', 'python', 'typst' },
-    ignore_install = {"latex"},
+    ensure_installed = { 'c', 'lua', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'cpp', 'python', 'typst' },
+    ignore_install = tex_stuff,
     modules = {},
     sync_install = true,
     auto_install = false,
     -- I prefer vimtex to handle all latex related stuff
-    highlight = { enable = true, },
+    highlight = { enable = true, disable = tex_stuff, },
     incremental_selection = {
-      enable = true,
+      enable = true, disable = tex_stuff,
       keymaps = {
         init_selection = "<Leader>ss",
         node_incremental = "<Leader>si",
@@ -245,7 +246,7 @@ vim.defer_fn(function()
     },
     textobjects = {
       select = {
-        enable = true,
+        enable = true, disable = tex_stuff,
         lookahead = true,
         keymaps = {
           -- You can use the capture groups defined in textobjects.scm
@@ -258,7 +259,7 @@ vim.defer_fn(function()
         },
       },
       move = {
-        enable = true,
+        enable = true, disable = tex_stuff,
         set_jumps = true, -- whether to set jumps in the jumplist
         goto_next_start = {
           [']m'] = '@function.outer',
@@ -278,7 +279,7 @@ vim.defer_fn(function()
         },
       },
       swap = {
-        enable = true,
+        enable = true, disable = tex_stuff,
         swap_next = {
           ['<leader>a'] = '@parameter.inner',
         },
