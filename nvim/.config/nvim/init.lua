@@ -84,11 +84,11 @@ vim.opt.rtp:prepend(lazypath)
 -- lazy.nvim
 require('lazy').setup({
   spec = {
-    {
-      "m4xshen/hardtime.nvim",
-      dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-      opts = {}
-    },
+    --{
+    --  "m4xshen/hardtime.nvim",
+    --  dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+    --  opts = {}
+    --},
 
     { 'lervag/vimtex', },
 
@@ -113,24 +113,24 @@ require('lazy').setup({
           },
         },
       },
-      config = function()
-        -- Formatting
-        vim.api.nvim_create_autocmd('LspAttach', {
-          callback = function(args)
-            local client = vim.lsp.get_client_by_id(args.data.client_id)
-            if not client then return end
-            if client.supports_method('textDocument/formatting', 0) then
-              vim.api.nvim_create_autocmd('BufWritePre', {
-                buffer = args.buf,
-                callback = function()
-                  vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
-                end
-              })
-            end
-          end
-        }
-        )
-      end
+      --config = function()
+      --  -- Formatting
+      --  vim.api.nvim_create_autocmd('LspAttach', {
+      --    callback = function(args)
+      --      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      --      if not client then return end
+      --      if client.supports_method('textDocument/formatting', 0) then
+      --        vim.api.nvim_create_autocmd('BufWritePre', {
+      --          buffer = args.buf,
+      --          callback = function()
+      --            vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+      --          end
+      --        })
+      --      end
+      --    end
+      --  }
+      --  )
+      --end
     },
 
     {
@@ -223,7 +223,7 @@ require("ibl").setup()
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
 -- See `:help telescope.builtin`
-vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
+--vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
 vim.keymap.set('n', '<leader>/',
   function()
@@ -234,12 +234,18 @@ vim.keymap.set('n', '<leader>/',
   end,
   { desc = '[/] Fuzzily search in current buffer' }
 )
-vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
+--vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+--vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
+--vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>en', function()
+  require('telescope.builtin').find_files {
+    cwd = vim.fn.stdpath('config')
+  }
+end,
+{desc = '[E]dit [N]eovim config'})
 
 -- [[ Configure Treesitter ]]
 vim.defer_fn(function()
