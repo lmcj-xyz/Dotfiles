@@ -1,4 +1,3 @@
-
 [bell]
 animation = "EaseOutExpo"
 color = "#ffffff"
@@ -53,7 +52,7 @@ TERM = "alacritty"
 
 [font]
 builtin_box_drawing = true
-size = 16
+size = 12
 
 [font.bold]
 family = "JuliaMono"
@@ -588,7 +587,7 @@ working_directory = "None"
 
 ipc_socket = true
 import = [
-    "~/.config/alacritty/themes/tokyo-night.toml"
+    "~/.config/alacritty/themes/rose-pine.toml"
 ]
 
 [terminal]

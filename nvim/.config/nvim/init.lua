@@ -1,4 +1,5 @@
 -- [[ Options ]]
+--set rtp^="/home/lmcj/.opam/default/share/ocp-indent/vim"
 
 vim.opt.spell = true
 vim.opt.spelllang = { 'en', 'es_mx' }
@@ -13,7 +14,7 @@ vim.opt.relativenumber = true
 
 vim.opt.mouse = 'a'
 
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 5
 
 vim.opt.clipboard = 'unnamedplus'
 
@@ -42,27 +43,27 @@ vim.opt.virtualedit = "block"
 vim.opt.encoding = "utf-8"
 
 -- [[ Variables ]]
-vim.g.python3_host_prog = '/home/lmcj/.pyenv/versions/nvim/bin/python'
+--vim.g.python3_host_prog = '/home/lmcj/.pyenv/versions/nvim/bin/python'
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Typst
-vim.g.typst_pdf_viewer = 'zathura'
-
--- Vimtex
-vim.g.tex_flavor = 'latex'
-vim.g.vimtex_complete_close_braces = 1
-vim.g.vimtex_quickfix_open_on_warning = 0
-vim.g.vimtex_compiler_method = 'latexmk'
-vim.g.vimtex_view_method = 'zathura'
-vim.g.vimtex_syntax_enabled = 1
---vim.g.vimtex_quickfix_method = 'pplatex'
-vim.g.vimtex_syntax_conceal_cites = {
-  type = 'brackets',
-  icon = '📖',
-  verbose = false,
-}
+---- Typst
+--vim.g.typst_pdf_viewer = 'zathura'
+--
+---- Vimtex
+--vim.g.tex_flavor = 'latex'
+--vim.g.vimtex_complete_close_braces = 1
+--vim.g.vimtex_quickfix_open_on_warning = 0
+--vim.g.vimtex_compiler_method = 'latexmk'
+--vim.g.vimtex_view_method = 'zathura'
+--vim.g.vimtex_syntax_enabled = 1
+----vim.g.vimtex_quickfix_method = 'pplatex'
+--vim.g.vimtex_syntax_conceal_cites = {
+--  type = 'brackets',
+--  icon = '📖',
+--  verbose = false,
+--}
 
 -- [[ Lazy ]]
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -84,13 +85,19 @@ vim.opt.rtp:prepend(lazypath)
 -- lazy.nvim
 require('lazy').setup({
   spec = {
+    {
+      "nvim-neorg/neorg",
+      lazy = false,    -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
+      version = "*",   -- Pin Neorg to the latest stable release
+      config = true,
+    },
     --{
     --  "m4xshen/hardtime.nvim",
     --  dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
     --  opts = {}
     --},
 
-    { 'lervag/vimtex', },
+    --{ 'lervag/vimtex', },
 
     { 'folke/which-key.nvim', opts = {} },
 
@@ -154,7 +161,7 @@ require('lazy').setup({
 
     {
       'nvim-lualine/lualine.nvim',
-      --event = 'ColorScheme',
+      event = 'ColorScheme',
       config = function()
         require('lualine').setup({
           options = {
@@ -219,6 +226,20 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- [[ Indent blanklines ]]
 require("ibl").setup()
 
+-- [[ Neorg ]]
+require('neorg').setup({
+  load = {
+    ["core.concealer"] = {},
+    ["core.dirman"] = {
+      config = {
+        workspaces = {
+          playground = "~/Proyectos/playground-neorg",
+        },
+      },
+    },
+  }
+})
+
 -- [[ some telescome keybindinds and fzf ]]
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
@@ -241,15 +262,15 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 --vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>en', function()
-  require('telescope.builtin').find_files {
-    cwd = vim.fn.stdpath('config')
-  }
-end,
-{desc = '[E]dit [N]eovim config'})
+    require('telescope.builtin').find_files {
+      cwd = vim.fn.stdpath('config')
+    }
+  end,
+  { desc = '[E]dit [N]eovim config' })
 
 -- [[ Configure Treesitter ]]
 vim.defer_fn(function()
-  local tex_stuff = { 'tex', 'latex', 'bibtex' }
+  --local tex_stuff = { 'tex', 'latex', 'bibtex' }
   require('treesitter-context').setup {
     enable = true,
     max_lines = 0,
@@ -264,14 +285,17 @@ vim.defer_fn(function()
   }
   require('nvim-treesitter.configs').setup {
     ensure_installed = { 'c', 'lua', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'cpp', 'python', 'typst' },
-    ignore_install = tex_stuff,
+    --ignore_install = tex_stuff,
+    ignore_install = {},
     modules = {},
     sync_install = true,
     auto_install = false,
     -- I prefer vimtex to handle all latex related stuff
-    highlight = { enable = true, disable = tex_stuff, },
+    --highlight = { enable = true, disable = tex_stuff, },
+    highlight = { enable = true, },
     incremental_selection = {
-      enable = true, disable = tex_stuff,
+      enable = true,
+      --disable = tex_stuff,
       keymaps = {
         init_selection = "<Leader>ss",
         node_incremental = "<Leader>si",
@@ -281,7 +305,8 @@ vim.defer_fn(function()
     },
     textobjects = {
       select = {
-        enable = true, disable = tex_stuff,
+        enable = true,
+        --disable = tex_stuff,
         lookahead = true,
         keymaps = {
           -- You can use the capture groups defined in textobjects.scm
@@ -294,7 +319,8 @@ vim.defer_fn(function()
         },
       },
       move = {
-        enable = true, disable = tex_stuff,
+        enable = true,
+        --disable = tex_stuff,
         set_jumps = true, -- whether to set jumps in the jumplist
         goto_next_start = {
           [']m'] = '@function.outer',
@@ -314,7 +340,8 @@ vim.defer_fn(function()
         },
       },
       swap = {
-        enable = true, disable = tex_stuff,
+        enable = true,
+        --disable = tex_stuff,
         swap_next = {
           ['<leader>a'] = '@parameter.inner',
         },
@@ -348,26 +375,36 @@ local on_attach = function(_, bufnr)
   end
 
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+  --vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, {buffer = bufnr, desc = 'LSP: [R]e[n]ame'})
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+  --vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {buffer = bufnr, desc = 'LSP: [C]ode [A]ction'})
 
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+  --vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, {buffer = bufnr, desc = 'LSP: [G]oto [D]efinition'})
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+  --vim.keymap.set('n', '<leader>gr', require('telescope.builtin').lsp_references, {buffer = bufnr, desc = 'LSP: [G]oto [R]eferences'})
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+  --vim.keymap.set('n', '<leader>gI', vim.lsp.buf.implementation, {buffer = bufnr, desc = 'LSP: [G]oto [I]mplementation'})
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+  --vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, {buffer = bufnr, desc = 'LSP: Type [D]efinition'})
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+  --vim.keymap.set('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols, {buffer = bufnr, desc = 'LSP: [D]ocument [S]ymbols'})
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  --vim.keymap.set('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, {buffer = bufnr, desc = 'LSP: [W]orkspace [S]ymbols'})
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+  --vim.keymap.set('n', '<leader>K', vim.lsp.buf.hover, {buffer = bufnr, desc = 'LSP: Hover Documentation'})
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  --vim.keymap.set('n', '<leader><C-k>', vim.lsp.buf.signature_help, {buffer = bufnr, desc = 'LSP: Signature Documentation'})
 
-  -- Lesser used LSP functionality
-  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  nmap('<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, '[W]orkspace [L]ist Folders')
+  ---- Lesser used LSP functionality
+  --nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+  --nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+  --nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+  --nmap('<leader>wl', function()
+  --  print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  --end, '[W]orkspace [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
@@ -471,6 +508,7 @@ vim.keymap.set({ 'n', 'i', 'v' }, '<F2>',
   end,
   { desc = 'Write the file and session' }
 )
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
