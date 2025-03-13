@@ -557,7 +557,7 @@ args = ["--login"]
 program = "/bin/bash"
 
 [window]
-decorations = "None"
+decorations = "Full"
 dynamic_padding = false
 dynamic_title = true
 #gtk_theme_variant = "None"
@@ -589,5 +589,13 @@ ipc_socket = true
 import = [
     "~/.config/alacritty/themes/rose-pine.toml"
 ]
+
+[colors.cursor]
+text = "#ffffff"
+cursor = "#ff00ff"
+
+[colors.vi_mode_cursor]
+text = "#ffffff"
+cursor = "#ff00ff"
 
 [terminal]
