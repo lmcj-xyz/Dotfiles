@@ -11,7 +11,7 @@ return {
                 filetypes = { "latex", "tex", "bib", },
                 settings = {
                     ltex = {
-                        enabled = {'bib', 'context', 'plaintex', 'tex'},
+                        enabled = {'bib', 'context', 'latex', 'plaintex', 'tex'},
                         language = 'en-GB',
                     }
                 }
