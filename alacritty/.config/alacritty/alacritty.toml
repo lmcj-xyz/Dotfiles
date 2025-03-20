@@ -52,7 +52,7 @@ TERM = "alacritty"
 
 [font]
 builtin_box_drawing = true
-size = 12
+size = 14
 
 [font.bold]
 family = "JuliaMono"
