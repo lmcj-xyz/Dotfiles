@@ -6,8 +6,7 @@ return {
             lspconfig.clangd.setup({}) --installed with dnf
             lspconfig.pyright.setup({}) --installed with pip
             lspconfig.lua_ls.setup({}) --installed from releases
-            --lspconfig.texlab.setup({}) --installed from releases
-            lspconfig.ltex.setup({
+            lspconfig.ltex.setup({ --installed from releases
                 filetypes = { "latex", "tex", "bib", },
                 settings = {
                     ltex = {
@@ -15,7 +14,7 @@ return {
                         language = 'en-GB',
                     }
                 }
-            }) --installed from releases
+            })
             lspconfig.harper_ls.setup({}) --installed from releases
         end,
         dependencies = {
