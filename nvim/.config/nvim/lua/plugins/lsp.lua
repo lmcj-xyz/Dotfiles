@@ -7,8 +7,15 @@ return {
             lspconfig.pyright.setup({}) --installed with pip
             lspconfig.lua_ls.setup({}) --installed from releases
             --lspconfig.texlab.setup({}) --installed from releases
-            lspconfig.ltex.setup({}) --installed from releases
-            --lspconfig.ltex.setup({ settings = { ltex = { dictionary = "{'en-GB': ['discretize', 'McKean', 'Vlasov'] }" } } }) --installed from releases
+            lspconfig.ltex.setup({
+                filetypes = { "latex", "tex", "bib", },
+                settings = {
+                    ltex = {
+                        enabled = {'bib', 'context', 'plaintex', 'tex'},
+                        language = 'en-GB',
+                    }
+                }
+            }) --installed from releases
             lspconfig.harper_ls.setup({}) --installed from releases
         end,
         dependencies = {
