@@ -4,7 +4,21 @@ return {
         config = function()
             local lspconfig = require('lspconfig')
             lspconfig.clangd.setup({}) --installed with dnf
-            lspconfig.pyright.setup({}) --installed with pip
+            lspconfig.ruff.setup({}) --installed with uv
+            lspconfig.pyright.setup({ --installed with pip
+                settings = {
+                    pyright = {
+                        -- Using Ruff's import organizer
+                        disableOrganizeImports = true,
+                    },
+                    python = {
+                        analysis = {
+                            -- Ignore all files for analysis to exclusively use Ruff for linting
+                            ignore = { '*' },
+                        },
+                    },
+                },
+            })
             lspconfig.lua_ls.setup({}) --installed from releases
             lspconfig.ltex.setup({ --installed from releases
                 filetypes = { "latex", "tex", "bib", },
