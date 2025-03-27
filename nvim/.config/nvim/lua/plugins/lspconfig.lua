@@ -19,12 +19,12 @@ return {
                     },
                 },
             })
-            lspconfig.lua_ls.setup({}) --installed from releases
+            lspconfig.lua_ls.setup({}) --installed from releases (https://github.com/LuaLS/lua-language-server/releases)
             local eng_dict = {}
             for word in io.open(vim.fn.stdpath("config") .. "/spell/en.utf-8.add", "r"):lines() do
                 table.insert(eng_dict, word)
             end
-            lspconfig.ltex.setup({ --installed from releases
+            lspconfig.ltex.setup({ --installed from releases (https://github.com/valentjn/ltex-ls/releases)
                 filetypes = { "latex", "tex", "bib", },
                 settings = {
                     ltex = {
@@ -36,7 +36,7 @@ return {
                     }
                 }
             })
-            lspconfig.harper_ls.setup({}) --installed from releases
+            lspconfig.harper_ls.setup({}) --installed from releases (https://github.com/Automattic/harper/releases)
         end,
         dependencies = {
             'folke/lazydev.nvim',
@@ -49,5 +49,5 @@ return {
                 },
             },
         },
-    }
+    },
 }

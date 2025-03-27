@@ -12,3 +12,4 @@ alias ccc="g++ -ggdb -pedantic-errors -Wall -Weffc++ -Wextra -Wconversion -Wsign
 alias b="buku --suggest"
 alias stmux="tmux new-session -s sys"
 alias sesh="source sesh"
+alias act_sage="source ./miniconda3/bin/activate && conda activate sage"
