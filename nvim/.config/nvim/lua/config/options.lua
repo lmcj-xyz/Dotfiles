@@ -55,6 +55,8 @@ vim.opt.foldenable = false
 
 vim.opt.conceallevel = 2
 
+vim.opt.showmode = false --removes mode from command line
+
 -- [ Variables ]
 -- These are much more general than options and close to the editor in nature
 
