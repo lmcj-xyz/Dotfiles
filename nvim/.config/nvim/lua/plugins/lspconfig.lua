@@ -20,6 +20,8 @@ return {
                 },
             })
             lspconfig.lua_ls.setup({}) --installed from releases (https://github.com/LuaLS/lua-language-server/releases)
+            lspconfig.elmls.setup({}) --installed with npm
+            lspconfig.hls.setup({}) --installed with GHCup
             local eng_dict = {}
             for word in io.open(vim.fn.stdpath("config") .. "/spell/en.utf-8.add", "r"):lines() do
                 table.insert(eng_dict, word)
