@@ -22,5 +22,3 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 --vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 require('lualine').setup({})
-
-vim.diagnostic.config({ virtual_text = true })
