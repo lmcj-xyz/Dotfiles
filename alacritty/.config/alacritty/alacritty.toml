@@ -587,7 +587,7 @@ working_directory = "None"
 
 ipc_socket = true
 import = [
-    "~/.config/alacritty/themes/rose-pine-dawn.toml"
+    "~/.config/alacritty/themes/rose-pine.toml"
 ]
 
 [colors.cursor]
